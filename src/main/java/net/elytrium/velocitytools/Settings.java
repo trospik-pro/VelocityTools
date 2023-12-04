@@ -17,7 +17,10 @@
 
 package net.elytrium.velocitytools;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import net.elytrium.java.commons.config.YamlConfig;
 import net.elytrium.java.commons.mc.serialization.Serializers;
 
@@ -117,7 +120,10 @@ public class Settings extends YamlConfig {
     public static class HUB {
 
       public boolean ENABLED = true;
-      public List<String> SERVERS = List.of("hub-1", "hub-2");
+      public Map<String, List<String>> SERVERS = Map.ofEntries(
+          Map.entry("763", List.of("lb1")),
+          Map.entry("764", List.of("lb2"))
+      );
       @Comment("Set to \"\" to disable.")
       public String YOU_GOT_MOVED = "&aYou have been moved to a hub!";
       public String DISABLED_SERVER = "&cYou cannot use this command here.";

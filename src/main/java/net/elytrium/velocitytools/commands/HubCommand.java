@@ -24,6 +24,8 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import com.velocitypowered.proxy.command.builtin.CommandMessages;
 import java.util.List;
+import java.util.Map;
+
 import net.elytrium.velocitytools.Settings;
 import net.elytrium.velocitytools.VelocityTools;
 import net.kyori.adventure.text.Component;
@@ -31,7 +33,7 @@ import net.kyori.adventure.text.Component;
 public class HubCommand implements SimpleCommand {
 
   private final ProxyServer server;
-  private final List<String> servers;
+  private final Map<String, List<String>> servers;
   private int serversCounter;
   private final Component disabledServer;
   private final List<String> disabledServers;
@@ -57,17 +59,18 @@ public class HubCommand implements SimpleCommand {
     }
 
     Player player = (Player) source;
+    String protocolVersion = String.valueOf(player.getProtocolVersion().getProtocol());
 
     String serverName;
-    int serversSize = this.servers.size();
+    int serversSize = this.servers.get(protocolVersion).size();
     if (serversSize > 1) {
       if (++this.serversCounter >= serversSize) {
         this.serversCounter = 0;
       }
 
-      serverName = this.servers.get(this.serversCounter);
+      serverName = this.servers.get(protocolVersion).get(this.serversCounter);
     } else {
-      serverName = this.servers.get(0);
+      serverName = this.servers.get(protocolVersion).get(0);
     }
     RegisteredServer toConnect = this.server.getServer(serverName).orElse(null);
     if (toConnect == null) {

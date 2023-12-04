@@ -51,7 +51,7 @@ dependencies() {
   // To suppress VulnerableLibrariesLocal of velocity-api dependency.
   compileOnly("org.yaml:snakeyaml:2.0")
 
-  implementation("net.elytrium:java-commons:1.1.0-SNAPSHOT")
+  implementation("net.elytrium:java-commons:1.1.0")
   implementation("net.elytrium:fastprepare:1.0.4")
 
   implementation("org.bstats:bstats-velocity:3.0.2")
