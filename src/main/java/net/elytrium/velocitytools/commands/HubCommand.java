@@ -34,7 +34,6 @@ public class HubCommand implements SimpleCommand {
 
   private final ProxyServer server;
   private final Map<String, List<String>> servers;
-  private int serversCounter;
   private final Component disabledServer;
   private final List<String> disabledServers;
   private final String youGotMoved;
@@ -43,7 +42,6 @@ public class HubCommand implements SimpleCommand {
   public HubCommand(ProxyServer server) {
     this.server = server;
     this.servers = Settings.IMP.COMMANDS.HUB.SERVERS;
-    this.serversCounter = this.servers.size();
     this.disabledServers = Settings.IMP.COMMANDS.HUB.DISABLED_SERVERS;
     this.disabledServer = VelocityTools.getSerializer().deserialize(Settings.IMP.COMMANDS.HUB.DISABLED_SERVER);
     this.youGotMoved = Settings.IMP.COMMANDS.HUB.YOU_GOT_MOVED;
@@ -63,12 +61,13 @@ public class HubCommand implements SimpleCommand {
 
     String serverName;
     int serversSize = this.servers.get(protocolVersion).size();
+    int serversCounter = serversSize;
     if (serversSize > 1) {
-      if (++this.serversCounter >= serversSize) {
-        this.serversCounter = 0;
+      if (++serversCounter >= serversSize) {
+        serversCounter = 0;
       }
 
-      serverName = this.servers.get(protocolVersion).get(this.serversCounter);
+      serverName = this.servers.get(protocolVersion).get(serversCounter);
     } else {
       serverName = this.servers.get(protocolVersion).get(0);
     }

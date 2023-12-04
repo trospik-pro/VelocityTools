@@ -44,6 +44,7 @@ import net.elytrium.velocitytools.commands.VelocityToolsCommand;
 import net.elytrium.velocitytools.hooks.HandshakeHook;
 import net.elytrium.velocitytools.hooks.HooksInitializer;
 import net.elytrium.velocitytools.listeners.BrandChangerPingListener;
+import net.elytrium.velocitytools.listeners.PlayerChooseInitialServerListener;
 import net.elytrium.velocitytools.listeners.ProtocolBlockerJoinListener;
 import net.elytrium.velocitytools.listeners.ProtocolBlockerPingListener;
 import net.kyori.adventure.text.Component;
@@ -175,6 +176,8 @@ public class VelocityTools {
     if (Settings.IMP.TOOLS.PROTOCOL_BLOCKER.BLOCK_JOIN) {
       this.server.getEventManager().register(this, new ProtocolBlockerJoinListener());
     }
+
+    this.server.getEventManager().register(this, new PlayerChooseInitialServerListener(this.server));
 
     HandshakeHook.reload(this.packetFactory);
   }
